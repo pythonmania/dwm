@@ -1,0 +1,11 @@
+{
+    "name": "daum_web_messenger"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.8"
+    , "jade": ">= 0.0.1"
+    , "ldapjs": ">= 0.4.8"
+    , "mongoose": ">= 2.6.0"
+  }
+}

@@ -1,0 +1,40 @@
+h1= title
+
+script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+
+p Welcome, #{user.cn[1]}
+  a(href='logout') logout
+p members: 
+each member in members
+  li
+    a(href='chat/#{member.uid}') #{member.cn[1]}
+
+input(type='text', id='search')
+input(type='button', id='search_link', value='search')
+script(src="/socket.io/socket.io.js")
+script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+        
+script
+  var socket = io.connect('http://localhost:3000');
+  
+  socket.on('join', function (message) {
+    console.log('join message received:' + message.from);
+    if (message.to == '#{user.uid}') {
+      window.location='/chat/' + message.from;
+    }
+  });
+  
+  $(document).ready(function(){
+    function doSearch() {
+      window.location='/search/' + $('#search').val();
+    };
+    $('#search').bind('keypress', function (event) {
+      if (event.keyCode == 13) {
+        doSearch();
+      }
+    });
+    $('#search_link').click(function (event) {
+      doSearch();
+    });
+    $('#search').focus();
+  });

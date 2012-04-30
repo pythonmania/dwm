@@ -1,0 +1,52 @@
+h1= title
+
+script(src="/socket.io/socket.io.js")
+script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js")
+
+style
+  #received_message {
+    overflow: auto;
+    height: 280px;
+  };
+script
+  var socket = io.connect('http://localhost:3000');
+  socket.on('connect', function() {
+    socket.emit('open', { from: '#{from}', to: '#{to}' });
+  });
+  
+  socket.on('message', function (message) {
+    $('div#received_message').append('<p>#{to}: ' + message + '</p>');
+    var msgbox = $('div#received_message');
+      msgbox.scrollTop(
+      msgbox[0].scrollHeight - msgbox.height()
+    );
+  });
+  
+  $(document).ready(function(){
+    function sendMessage() {
+      socket.emit('message', { from: '#{from}', to: '#{to}', message: $("#message").val() });
+      console.log('message to send ' + $('#message').val());
+      $('div#received_message').append('<p>#{from}: ' + $('#message').val() + '</p>');
+      $("div#received_message").attr({ scrollTop: $("div#received_message").attr("scrollHeight") });
+      var msgbox = $('div#received_message');
+            msgbox.scrollTop(
+                msgbox[0].scrollHeight - msgbox.height()
+            );
+      $('#message').val('');
+    };
+    $('#message').bind('keypress', function (event) {
+      if (event.keyCode == 13) {
+        sendMessage();
+      }
+    });
+    $('#send_message').click(function (event) {
+      sendMessage();
+    });
+    $('#message').focus();
+  });
+
+div#received_message
+
+input(type='text', id='message')
+input(type='button', id='send_message', value='send') send
+a(href='/main') back

@@ -1,0 +1,17 @@
+{
+  "name": "Daum Web Messenger Extension",
+  "version": "0.0.1",
+  "description": "daum web messenger alpha version.",
+  "app": {
+    "launch": {
+      "web_url": "http://10.0.2.15:3000/"
+    }
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "notifications"
+  ]
+}
